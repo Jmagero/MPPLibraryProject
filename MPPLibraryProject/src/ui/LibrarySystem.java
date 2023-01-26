@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import dataaccess.Auth;
+import ui.LibrarySystem;
 import util.Util;
 
 
@@ -42,7 +43,9 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 	private static SystemWindow[] allWindows = { 
 			LibrarySystem.UI, 
 			LogInWindow.UI,
-			AddMemberWindow.UI};
+			AddMemberWindow.UI,
+			BookWindow.UI, 
+			BookCopyWindow.UI,};
 	
 	
 	private LibrarySystem() {
@@ -122,6 +125,8 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 		btnAddBookCopy.setFocusPainted(false);
 		
 		btnAddMember.addActionListener(new AddMemberListener());
+		btnAddBook.addActionListener(new AddBookListener());
+		btnAddBookCopy.addActionListener(new AddBookCopyListener());
 		
 		AdminPanel.add(btnAddMember);
 		AdminPanel.add(btnAddBook);
@@ -203,6 +208,32 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 			AddMemberWindow.UI.pack();
 			Util.centerFrameOnDesktop(AddMemberWindow.UI);
 			AddMemberWindow.UI.setVisible(true);
+		}
+
+	}
+	
+	class AddBookCopyListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			BookCopyWindow.UI.init();
+			BookCopyWindow.UI.pack();
+			Util.centerFrameOnDesktop(BookCopyWindow.UI);
+			BookCopyWindow.UI.setVisible(true);
+
+		}
+
+	}
+
+	class AddBookListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			BookWindow.UI.init();
+			BookWindow.UI.pack();
+			Util.centerFrameOnDesktop(AddMemberWindow.UI);
+			BookWindow.UI.setVisible(true);
 		}
 
 	}

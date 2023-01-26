@@ -12,6 +12,7 @@ import java.util.List;
 
 import domain.Author;
 import domain.Book;
+import domain.LibraryMember;
 
 
 public class DataAccessFacade implements DataAccess {
@@ -83,6 +84,11 @@ public class DataAccessFacade implements DataAccess {
 		saveToStorage(StorageType.AUTHORS, authors);
 	}
 	
+	static void loadMemberMap(List<LibraryMember> memberList) {
+		HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
+		memberList.forEach(member -> members.put(member.getMemberId(), member));
+		saveToStorage(StorageType.MEMBERS, members);
+	}
 	
 	static void saveToStorage(StorageType type, Object ob) {
 		ObjectOutputStream out = null;
@@ -156,6 +162,24 @@ public class DataAccessFacade implements DataAccess {
 		}
 
 		private static final long serialVersionUID = 5399827794066637059L;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public HashMap<String, LibraryMember> readMemberMap() {
+		return (HashMap<String, LibraryMember>) readFromStorage(
+				StorageType.MEMBERS);
+	}
+
+
+
+	@Override
+	public void saveNewMember(LibraryMember member) {
+		HashMap<String, LibraryMember> mems = readMemberMap();
+		String memberId = member.getMemberId();
+		mems.put(memberId, member);
+		saveToStorage(StorageType.MEMBERS, mems);
+		
 	}
 
 }
