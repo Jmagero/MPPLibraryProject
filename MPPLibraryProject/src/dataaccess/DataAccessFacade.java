@@ -12,7 +12,7 @@ import java.util.List;
 
 import domain.Author;
 import domain.Book;
-import domain.LibraryMember;
+
 
 public class DataAccessFacade implements DataAccess {
 
@@ -30,12 +30,7 @@ public class DataAccessFacade implements DataAccess {
 		return (HashMap<String, Book>) readFromStorage(StorageType.BOOKS);
 	}
 
-	@SuppressWarnings("unchecked")
-	public HashMap<String, LibraryMember> readMemberMap() {
-		// Returns a Map with name/value pairs being
-		// memberId -> LibraryMember
-		return (HashMap<String, LibraryMember>) readFromStorage(StorageType.MEMBERS);
-	}
+
 
 	@SuppressWarnings("unchecked")
 	public HashMap<String, User> readUserMap() {
@@ -51,13 +46,7 @@ public class DataAccessFacade implements DataAccess {
 		return (HashMap<String, Author>) readFromStorage(StorageType.AUTHORS);
 	}
 
-	// implement: other save operations
-	public void saveNewMember(LibraryMember member) {
-		HashMap<String, LibraryMember> mems = readMemberMap();
-		String memberId = member.getMemberId();
-		mems.put(memberId, member);
-		saveToStorage(StorageType.MEMBERS, mems);
-	}
+
 
 	public void saveNewBook(Book book) {
 		HashMap<String, Book> books = readBooksMap();
@@ -86,11 +75,7 @@ public class DataAccessFacade implements DataAccess {
 		saveToStorage(StorageType.USERS, users);
 	}
 
-	static void loadMemberMap(List<LibraryMember> memberList) {
-		HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
-		memberList.forEach(member -> members.put(member.getMemberId(), member));
-		saveToStorage(StorageType.MEMBERS, members);
-	}
+
 	
 	static void loadAuthorMap(List<Author> authorList) {
 		HashMap<String, Author> authors = new HashMap<String, Author>();

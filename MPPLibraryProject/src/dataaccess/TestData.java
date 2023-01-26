@@ -47,55 +47,11 @@ public class TestData {
 		
 	}
 	
-//	public void userData() {
-//		DataAccessFacade.loadUserMap(allUsers);
-//	}
-	
-	//Added by WinWin
 	public void authorData() {
 		DataAccessFacade.loadAuthorMap(allAuthors);
 	}
 	
-//	public void checkOutRecordData() {
-//		@SuppressWarnings("serial")
-//		LibraryMember libraryMember = new LibraryMember();
-//		
-//		CheckOutRecordEntry entry = new CheckOutRecordEntry();
-//		CheckOutRecordEntry entry1 = new CheckOutRecordEntry();
-//		
-//		List<CheckOutRecordEntry> list = new ArrayList<CheckOutRecordEntry>();
-//		list.add(entry);
-//		list.add(entry1);
-// 		@SuppressWarnings("serial")
-//		CheckOutRecord checkOutRecord = new CheckOutRecord();
-//				
-//		DataAccessFacade.loadCheckOutRecordMap(checkOutRecord);
-//	}
-	
-	
-	
-	
-	
-	//create library members
-//	public void libraryMemberData() {
-//		LibraryMember libraryMember = new LibraryMember();
-//		members.add(libraryMember);
-//		libraryMember = new LibraryMember();
-//		members.add(libraryMember);
-//		
-//		libraryMember = new LibraryMember();
-//		members.add(libraryMember);
-//		
-//		libraryMember = new LibraryMember();
-//		members.add(libraryMember);
-//		
-//		DataAccessFacade.loadMemberMap(members);	
-//	}
-	
-	///////////// DATA //////////////
-//	List<LibraryMember> members = new ArrayList<LibraryMember>();
-//	@SuppressWarnings("serial")
-	
+		
 	List<Address> addresses = new ArrayList<Address>() {
 		{
 			add(new Address("101 S. Main", "Fairfield", "IA", "52556"));
@@ -130,14 +86,6 @@ public class TestData {
 			add(new Book("48-56882", "Jimmy's First Day of School", 7, Arrays.asList(allAuthors.get(4))));		
 		}
 	};
-	
-//	@SuppressWarnings("serial")
-//	List<User> allUsers = new ArrayList<User>() {
-//		{
-//			add(new User("101", "xyz", Auth.LIBRARIAN));
-//			add(new User("102", "abc", Auth.ADMIN));
-//			add(new User("103", "111", Auth.BOTH));
-//		}
-//	};
+
 	
 }
