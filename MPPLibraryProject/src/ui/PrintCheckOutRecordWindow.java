@@ -111,8 +111,11 @@ public class PrintCheckOutRecordWindow extends JFrame implements SystemWindow {
 	
 	private void displayCheckoutInfo() {
 		CheckOutRecord cr = printCheckOutBookUseCase.getCheckOutRecord(txtMemberID.getText());
-		if (cr == null)
+		if (cr == null) {
+			DefaultTableModel model2 = (DefaultTableModel) jt.getModel();
+			model2.setRowCount(0);
 			return;
+		}
 
 		DefaultTableModel model2 = (DefaultTableModel) jt.getModel();
 		model2.setRowCount(0);

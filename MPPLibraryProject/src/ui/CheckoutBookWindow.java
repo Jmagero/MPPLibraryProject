@@ -77,6 +77,7 @@ public class CheckoutBookWindow extends JFrame implements SystemWindow {
         model.addColumn("Book Name");
         model.addColumn("Checkout Date");
         model.addColumn("Due Date");
+        model.addColumn("Available");
 
         jt = new JTable(model);
 
@@ -140,7 +141,7 @@ public class CheckoutBookWindow extends JFrame implements SystemWindow {
             model2.addRow(new Object[] { cr.getMember().getMemberId(), cr.getMember().getFullName(),
                     entry.getBookCopy().getBook().getISBN(),
                     entry.getBookCopy().getBook().getTitle(), entry.getCheckOutDate().toString(),
-                    entry.getDueDate().toString() });
+                    entry.getDueDate().toString(), (entry.getBookCopy().getBook().getBookcopies().length - entry.getBookCopy().getCopyNum())});
         }
     }
 
