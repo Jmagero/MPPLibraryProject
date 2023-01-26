@@ -3,7 +3,7 @@ package domain;
 import java.io.Serializable;
 
 public class Person implements Serializable {
-	private static final long serialVersionUID = 3665880920647848288L;
+	private static final long serialVersionUID = -6573766119103101140L;
 	private String firstName;
 	private String lastName;
 	private String telephone;
