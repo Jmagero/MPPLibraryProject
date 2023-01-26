@@ -57,12 +57,6 @@ public class DataAccessFacade implements DataAccess {
 		return (HashMap<String, Author>) readFromStorage(StorageType.AUTHORS);
 	}
 
-	static void loadMemberMap(List<LibraryMember> memberList) {
-		HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
-		memberList.forEach(member -> members.put(member.getMemberId(), member));
-		saveToStorage(StorageType.MEMBERS, members);
-	}
-
 	public void saveNewBook(Book book) {
 		HashMap<String, Book> books = readBooksMap();
 		books.put(book.getISBN(), book);
@@ -98,6 +92,11 @@ public class DataAccessFacade implements DataAccess {
 		saveToStorage(StorageType.AUTHORS, authors);
 	}
 	
+	static void loadMemberMap(List<LibraryMember> memberList) {
+		HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
+		memberList.forEach(member -> members.put(member.getMemberId(), member));
+		saveToStorage(StorageType.MEMBERS, members);
+	}
 	
 	static void saveToStorage(StorageType type, Object ob) {
 		ObjectOutputStream out = null;
@@ -173,13 +172,6 @@ public class DataAccessFacade implements DataAccess {
 		private static final long serialVersionUID = 5399827794066637059L;
 	}
 
-	@Override
-	public void saveNewMember(LibraryMember member) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 	static void loadCheckOutRecordMap(CheckOutRecord checkOutRecord) {
 		HashMap<String, CheckOutRecord> hmCheckOutRecord = new HashMap<String, CheckOutRecord> ();
 		hmCheckOutRecord.put(checkOutRecord.getMember().getMemberId(), checkOutRecord);
@@ -194,6 +186,14 @@ public class DataAccessFacade implements DataAccess {
 	@Override
 	public HashMap<String, LibraryMember> readMemberMap() {
 		return (HashMap<String, LibraryMember>) readFromStorage(StorageType.MEMBERS);
+	}
+
+	@Override
+	public void saveNewMember(LibraryMember member) {
+		HashMap<String, LibraryMember> mems = readMemberMap();
+		String memberId = member.getMemberId();
+		mems.put(memberId, member);
+		saveToStorage(StorageType.MEMBERS, mems);
 	}
 
 }

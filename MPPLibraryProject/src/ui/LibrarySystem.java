@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import dataaccess.Auth;
 import ui.LibrarySystem.CheckOutBookListener;
+import ui.LibrarySystem;
 import util.Util;
 
 
@@ -46,12 +47,12 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 			LogInWindow.UI,
 			AddMemberWindow.UI,
 			CheckoutBookWindow.UI,
-			PrintCheckOutRecordWindow.UI};	
+			PrintCheckOutRecordWindow.UI,
+			BookWindow.UI, 
+			BookCopyWindow.UI};
 	
 	private LibrarySystem() {
 	}
-
-	
 
 	@Override
 	public void init() {
@@ -125,6 +126,8 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 		btnAddBookCopy.setFocusPainted(false);
 		
 		btnAddMember.addActionListener(new AddMemberListener());
+		btnAddBook.addActionListener(new AddBookListener());
+		btnAddBookCopy.addActionListener(new AddBookCopyListener());
 		
 		AdminPanel.add(btnAddMember);
 		AdminPanel.add(btnAddBook);
@@ -213,8 +216,7 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 
 	}
 	
-	class CheckOutBookListener implements ActionListener {
-
+	class AddBookCopyListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			LibrarySystem.hideAllWindows();
@@ -235,9 +237,28 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 			PrintCheckOutRecordWindow.UI.setVisible(true);
 
 		}
-
 	}
 	
+	class CheckOutBookListener implements ActionListener {
+			BookCopyWindow.UI.init();
+			BookCopyWindow.UI.pack();
+			Util.centerFrameOnDesktop(BookCopyWindow.UI);
+			BookCopyWindow.UI.setVisible(true);
+		}
+	}
+
+	class AddBookListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			BookWindow.UI.init();
+			BookWindow.UI.pack();
+			Util.centerFrameOnDesktop(AddMemberWindow.UI);
+			BookWindow.UI.setVisible(true);
+		}
+
+	}
+
 	public static void hideAllWindows() {
 
 		for (SystemWindow frame : allWindows) {

@@ -31,11 +31,16 @@ public class TestData {
 		//Added by WinWin
 		td.authorData();	
 		td.checkOutRecordData();
+		td.userData();
+		
+		td.authorData();
+		
+		//td.checkOutRecordData();
 		
 		DataAccess da = new DataAccessFacade();
 		System.out.println(da.readBooksMap());
 		System.out.println(da.readAuthorMap());
-		//System.out.println(da.readUserMap());
+		System.out.println(da.readUserMap());
 	}
 	///create books
 	public void bookData() {
@@ -49,14 +54,13 @@ public class TestData {
 		
 	}
 	
+	public void userData() {
+		DataAccessFacade.loadUserMap(allUsers);
+	}
+	
 	public void authorData() {
 		DataAccessFacade.loadAuthorMap(allAuthors);
 	}
-	
-		
-	List<LibraryMember> members = new ArrayList<LibraryMember>();
-	
-	//create library members
 	public void libraryMemberData() {
 		LibraryMember libraryMember = new LibraryMember("1001", "Andy", "Rogers", "641-223-2211", addresses.get(4));
 		members.add(libraryMember);
@@ -71,6 +75,7 @@ public class TestData {
 		
 		DataAccessFacade.loadMemberMap(members);	
 	}
+	List<LibraryMember> members = new ArrayList<LibraryMember>();	
 	
 	public void checkOutRecordData() {
 		LibraryMember libraryMember = new LibraryMember("1001", "Andy", "Rogers", "641-223-2211", addresses.get(4));
@@ -114,5 +119,13 @@ public class TestData {
 		}
 	};
 
+	@SuppressWarnings("serial")
+	List<User> allUsers = new ArrayList<User>() {
+		{
+			add(new User("101", "xyz", Auth.LIBRARIAN));
+			add(new User("102", "abc", Auth.ADMIN));
+			add(new User("103", "111", Auth.BOTH));
+		}
+	};
 	
 }
