@@ -15,7 +15,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import dataaccess.Auth;
-import ui.LibrarySystem.CheckOutBookListener;
 import ui.LibrarySystem;
 import util.Util;
 
@@ -216,7 +215,7 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 
 	}
 	
-	class AddBookCopyListener implements ActionListener {
+	class CheckOutBookListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			LibrarySystem.hideAllWindows();
@@ -239,12 +238,18 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 		}
 	}
 	
-	class CheckOutBookListener implements ActionListener {
+	class AddBookCopyListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
 			BookCopyWindow.UI.init();
 			BookCopyWindow.UI.pack();
 			Util.centerFrameOnDesktop(BookCopyWindow.UI);
 			BookCopyWindow.UI.setVisible(true);
+
 		}
+
 	}
 
 	class AddBookListener implements ActionListener {
