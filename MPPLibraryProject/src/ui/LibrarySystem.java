@@ -11,9 +11,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import dataaccess.Auth;
+import ui.LibrarySystem.CheckOutBookListener;
 import util.Util;
 
 
@@ -42,8 +44,9 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 	private static SystemWindow[] allWindows = { 
 			LibrarySystem.UI, 
 			LogInWindow.UI,
-			AddMemberWindow.UI};
-	
+			AddMemberWindow.UI,
+			CheckoutBookWindow.UI,
+			PrintCheckOutRecordWindow.UI};	
 	
 	private LibrarySystem() {
 	}
@@ -147,6 +150,9 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 		btnPrintCheckOutRecord.setFocusPainted(false);
 		btnCalculateLateFee.setFocusPainted(false);
 		
+		btnCheckOutBook.addActionListener(new CheckOutBookListener());
+		btnPrintCheckOutRecord.addActionListener(new PrintCheckOutRecordListener());
+		
 		LibrarianPanel.add(btnCheckOutBook);
 		LibrarianPanel.add(btnPrintCheckOutRecord);
 		LibrarianPanel.add(btnCalculateLateFee);
@@ -206,6 +212,32 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 		}
 
 	}
+	
+	class CheckOutBookListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			CheckoutBookWindow.UI.init();
+			CheckoutBookWindow.UI.pack();
+			Util.centerFrameOnDesktop(CheckoutBookWindow.UI);
+			CheckoutBookWindow.UI.setVisible(true);
+		}
+	}
+	
+	class PrintCheckOutRecordListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			PrintCheckOutRecordWindow.UI.init();
+			PrintCheckOutRecordWindow.UI.pack();
+			Util.centerFrameOnDesktop(PrintCheckOutRecordWindow.UI);
+			PrintCheckOutRecordWindow.UI.setVisible(true);
+
+		}
+
+	}
+	
 	public static void hideAllWindows() {
 
 		for (SystemWindow frame : allWindows) {

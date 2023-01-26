@@ -2,8 +2,11 @@ package controller;
 
 import usecase.AddMemberUseCase;
 import usecase.LogInUseCase;
+import usecase.PrintCheckOutRecordUseCase;
 import usecase.BookCopyUseCase;
 import usecase.BookUseCase;
+import usecase.CheckMemberUseCase;
+import usecase.CheckOutBookUseCase;
 import usecase.GetAuthorUseCase;
 import usecase.SearchBookUseCase;
 
@@ -45,4 +48,20 @@ public class ControllerFactory {
 		GetAuthorUseCase useCase = new GetAuthorController();
 		return useCase;
 	}
+	
+	public static CheckMemberUseCase createCheckMemberUseCase() {
+		CheckMemberUseCase useCase = new AddMemberController();
+		return useCase;
+	}
+	
+	public static CheckOutBookUseCase createCheckOutBookUseCase() {
+		CheckOutBookUseCase useCase = new CheckOutBookController();
+		return useCase;
+	}
+	
+	public static PrintCheckOutRecordUseCase createPrintCheckOutBookUseCase() {
+		PrintCheckOutRecordUseCase useCase = new CheckOutBookController();
+		return useCase;
+	}
+
 }

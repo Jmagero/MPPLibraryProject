@@ -7,12 +7,14 @@ import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import domain.Author;
 import domain.Book;
-
+import domain.CheckOutRecord;
+import domain.LibraryMember;
 
 public class DataAccessFacade implements DataAccess {
 
@@ -30,7 +32,16 @@ public class DataAccessFacade implements DataAccess {
 		return (HashMap<String, Book>) readFromStorage(StorageType.BOOKS);
 	}
 
-
+	@SuppressWarnings("unchecked")
+	@Override
+	public HashMap<String, CheckOutRecord> readCheckOutRecordsMap() {
+		return (HashMap<String, CheckOutRecord>) readFromStorage(StorageType.CHECKOUTRECORD);
+	}
+	
+	@Override
+	public void saveCheckOutRecord(HashMap<String, CheckOutRecord> mapCheckOutRecords) {
+		saveToStorage(StorageType.CHECKOUTRECORD, mapCheckOutRecords);
+	}
 
 	@SuppressWarnings("unchecked")
 	public HashMap<String, User> readUserMap() {
@@ -46,7 +57,11 @@ public class DataAccessFacade implements DataAccess {
 		return (HashMap<String, Author>) readFromStorage(StorageType.AUTHORS);
 	}
 
-
+	static void loadMemberMap(List<LibraryMember> memberList) {
+		HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
+		memberList.forEach(member -> members.put(member.getMemberId(), member));
+		saveToStorage(StorageType.MEMBERS, members);
+	}
 
 	public void saveNewBook(Book book) {
 		HashMap<String, Book> books = readBooksMap();
@@ -156,6 +171,29 @@ public class DataAccessFacade implements DataAccess {
 		}
 
 		private static final long serialVersionUID = 5399827794066637059L;
+	}
+
+	@Override
+	public void saveNewMember(LibraryMember member) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	static void loadCheckOutRecordMap(CheckOutRecord checkOutRecord) {
+		HashMap<String, CheckOutRecord> hmCheckOutRecord = new HashMap<String, CheckOutRecord> ();
+		hmCheckOutRecord.put(checkOutRecord.getMember().getMemberId(), checkOutRecord);
+		
+		List<CheckOutRecord> checkOutRecords = new ArrayList<CheckOutRecord>();
+		checkOutRecords.add(checkOutRecord);
+		
+		saveToStorage(StorageType.CHECKOUTRECORD, hmCheckOutRecord);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public HashMap<String, LibraryMember> readMemberMap() {
+		return (HashMap<String, LibraryMember>) readFromStorage(StorageType.MEMBERS);
 	}
 
 }
