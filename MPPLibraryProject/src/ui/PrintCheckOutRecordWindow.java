@@ -30,6 +30,7 @@ public class PrintCheckOutRecordWindow extends JFrame implements SystemWindow {
 
 	JTextField txtMemberID;
 	JTable jt;
+	DefaultTableModel model2;
 	
 	public void checkOutBook() {
 		JPanel panelCheckoutFields = new JPanel();
@@ -56,7 +57,6 @@ public class PrintCheckOutRecordWindow extends JFrame implements SystemWindow {
 		pnlButtons.add(btnBackToMain);
 		pnlButtons.add(btnSearch);
 		pnlButtons.setBounds(20, 150, 800, 35);
-		//pnlButtons.setBackground(Color.gray);
 
 		DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("Member Id");
@@ -73,7 +73,6 @@ public class PrintCheckOutRecordWindow extends JFrame implements SystemWindow {
 		panelCheckoutFields.add(sp);
 
 		// Print CheckoutRecord
-
 		panelCheckoutFields.add(lblMemberID);
 		panelCheckoutFields.add(txtMemberID);
 
@@ -82,7 +81,7 @@ public class PrintCheckOutRecordWindow extends JFrame implements SystemWindow {
 		this.setSize(450, 450);
 		this.setVisible(true);
 		this.add(panelCheckoutFields);
-
+		isInitialized = true;
 	}
 
 	private void addCheckIDListener(JButton butn) {
@@ -90,11 +89,11 @@ public class PrintCheckOutRecordWindow extends JFrame implements SystemWindow {
 			String memberID = txtMemberID.getText().trim();
 
 			if (memberID.length() == 0) {
-				JOptionPane.showMessageDialog(this, "Member ID required", "Search Failed",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Member ID required", "Search Failed", JOptionPane.ERROR_MESSAGE);
 			} else {
 					try {
 						displayCheckoutInfo();
+						txtMemberID.setText("");
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(this, e.getMessage(), "Search Failed!", JOptionPane.ERROR_MESSAGE);
 					}
@@ -112,14 +111,15 @@ public class PrintCheckOutRecordWindow extends JFrame implements SystemWindow {
 	private void displayCheckoutInfo() {
 		CheckOutRecord cr = printCheckOutBookUseCase.getCheckOutRecord(txtMemberID.getText());
 		if (cr == null) {
-			DefaultTableModel model2 = (DefaultTableModel) jt.getModel();
+			model2 = (DefaultTableModel) jt.getModel();
 			model2.setRowCount(0);
+			JOptionPane.showMessageDialog(this, "CheckoutRecord doesn't found", "Search CheckoutRecord", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		DefaultTableModel model2 = (DefaultTableModel) jt.getModel();
-		model2.setRowCount(0);
-			
+		model2.setRowCount(0);			
+		
 		for (CheckOutRecordEntry entry : cr.getCheckOutRecordEntries()) {
 			model2.addRow(new Object[] { cr.getMember().getMemberId(), cr.getMember().getFullName(),
 					entry.getBookCopy().getBook().getISBN(),
@@ -141,6 +141,12 @@ public class PrintCheckOutRecordWindow extends JFrame implements SystemWindow {
 	@Override
 	public void init() {
 		checkOutBook();
+	}
+	
+	public void clearForm() {
+		txtMemberID.setText("");	
+		model2 = (DefaultTableModel) jt.getModel();
+		model2.setRowCount(0);
 	}
 
 }

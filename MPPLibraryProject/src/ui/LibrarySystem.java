@@ -245,8 +245,8 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 			}
 			else {
 				LibrarySystem.hideAllWindows();
-				CheckoutBookWindow.UI.setVisible(true);
-				
+				CheckoutBookWindow.UI.setVisible(true);		
+				CheckoutBookWindow.UI.clearForm();		
 			}
 		}
 	}
@@ -266,6 +266,7 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 				
 				LibrarySystem.hideAllWindows();
 				PrintCheckOutRecordWindow.UI.setVisible(true);
+				PrintCheckOutRecordWindow.UI.clearForm();
 			}
 
 		}
@@ -300,7 +301,7 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 				LibrarySystem.hideAllWindows();
 				BookWindow.UI.init();
 				BookWindow.UI.pack();
-				Util.centerFrameOnDesktop(AddMemberWindow.UI);
+				Util.centerFrameOnDesktop(BookWindow.UI);
 				BookWindow.UI.setVisible(true);
 			}else {
 				
