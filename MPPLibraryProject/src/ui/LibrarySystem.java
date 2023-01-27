@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import dataaccess.Auth;
 import ui.LibrarySystem;
+import usecase.PrintCheckOutRecordUseCase;
 import util.Util;
 
 
@@ -191,10 +192,19 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (btnLogIn.getText().equals("Log In")) {
-				LibrarySystem.hideAllWindows();
-				LogInWindow.UI.init();
-				Util.centerFrameOnDesktop(LogInWindow.UI);
-				LogInWindow.UI.setVisible(true);
+				if(!LogInWindow.UI.isInitialized()) {
+					
+					LibrarySystem.hideAllWindows();
+					LogInWindow.UI.init();
+					LogInWindow.UI.revalidate();
+					Util.centerFrameOnDesktop(LogInWindow.UI);
+					LogInWindow.UI.setVisible(true);
+				}
+				else {
+					LibrarySystem.hideAllWindows();
+					LogInWindow.UI.setVisible(true);
+					
+				}
 			} else {
 				showOnlyLogIn();
 			}
@@ -206,11 +216,19 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 	class AddMemberListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			LibrarySystem.hideAllWindows();
-			AddMemberWindow.UI.init();
-			AddMemberWindow.UI.pack();
-			Util.centerFrameOnDesktop(AddMemberWindow.UI);
-			AddMemberWindow.UI.setVisible(true);
+			if(!AddMemberWindow.UI.isInitialized()) {
+				
+				LibrarySystem.hideAllWindows();
+				AddMemberWindow.UI.init();
+				AddMemberWindow.UI.pack();
+				Util.centerFrameOnDesktop(AddMemberWindow.UI);
+				AddMemberWindow.UI.setVisible(true);
+			}
+			else {
+				LibrarySystem.hideAllWindows();
+				AddMemberWindow.UI.setVisible(true);
+				
+			}
 		}
 
 	}
@@ -218,22 +236,37 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 	class CheckOutBookListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			LibrarySystem.hideAllWindows();
-			CheckoutBookWindow.UI.init();
-			CheckoutBookWindow.UI.pack();
-			Util.centerFrameOnDesktop(CheckoutBookWindow.UI);
-			CheckoutBookWindow.UI.setVisible(true);
+			if(!CheckoutBookWindow.UI.isInitialized()) {
+				LibrarySystem.hideAllWindows();
+				CheckoutBookWindow.UI.init();
+				CheckoutBookWindow.UI.pack();
+				Util.centerFrameOnDesktop(CheckoutBookWindow.UI);
+				CheckoutBookWindow.UI.setVisible(true);
+			}
+			else {
+				LibrarySystem.hideAllWindows();
+				CheckoutBookWindow.UI.setVisible(true);
+				
+			}
 		}
 	}
 	
 	class PrintCheckOutRecordListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			LibrarySystem.hideAllWindows();
-			PrintCheckOutRecordWindow.UI.init();
-			PrintCheckOutRecordWindow.UI.pack();
-			Util.centerFrameOnDesktop(PrintCheckOutRecordWindow.UI);
-			PrintCheckOutRecordWindow.UI.setVisible(true);
+			if(!PrintCheckOutRecordWindow.UI.isInitialized()) {
+				
+				LibrarySystem.hideAllWindows();
+				PrintCheckOutRecordWindow.UI.init();
+				PrintCheckOutRecordWindow.UI.pack();
+				Util.centerFrameOnDesktop(PrintCheckOutRecordWindow.UI);
+				PrintCheckOutRecordWindow.UI.setVisible(true);
+			}
+			else {
+				
+				LibrarySystem.hideAllWindows();
+				PrintCheckOutRecordWindow.UI.setVisible(true);
+			}
 
 		}
 	}
@@ -242,11 +275,18 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			LibrarySystem.hideAllWindows();
-			BookCopyWindow.UI.init();
-			BookCopyWindow.UI.pack();
-			Util.centerFrameOnDesktop(BookCopyWindow.UI);
-			BookCopyWindow.UI.setVisible(true);
+			if(!BookCopyWindow.UI.isInitialized()) {
+				
+				LibrarySystem.hideAllWindows();
+				BookCopyWindow.UI.init();
+				BookCopyWindow.UI.pack();
+				Util.centerFrameOnDesktop(BookCopyWindow.UI);
+				BookCopyWindow.UI.setVisible(true);
+			}else {
+				LibrarySystem.hideAllWindows();
+				BookCopyWindow.UI.setVisible(true);
+				
+			}
 
 		}
 
@@ -255,11 +295,18 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 	class AddBookListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			LibrarySystem.hideAllWindows();
-			BookWindow.UI.init();
-			BookWindow.UI.pack();
-			Util.centerFrameOnDesktop(AddMemberWindow.UI);
-			BookWindow.UI.setVisible(true);
+			if(!BookWindow.UI.isInitialized()) {
+				
+				LibrarySystem.hideAllWindows();
+				BookWindow.UI.init();
+				BookWindow.UI.pack();
+				Util.centerFrameOnDesktop(AddMemberWindow.UI);
+				BookWindow.UI.setVisible(true);
+			}else {
+				
+				LibrarySystem.hideAllWindows();
+				BookWindow.UI.setVisible(true);
+			}
 		}
 
 	}
@@ -270,6 +317,8 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 			frame.setVisible(false);
 
 		}
+		//LibrarySystem.UI.dispose();
+		
 	}
 	
 	public void giveAuthority(Auth auth) {
