@@ -5,6 +5,7 @@ import usecase.LogInUseCase;
 import usecase.PrintCheckOutRecordUseCase;
 import usecase.BookCopyUseCase;
 import usecase.BookUseCase;
+import usecase.CalculateLateFeeUseCase;
 import usecase.CheckMemberUseCase;
 import usecase.CheckOutBookUseCase;
 import usecase.GetAuthorUseCase;
@@ -64,4 +65,8 @@ public class ControllerFactory {
 		return useCase;
 	}
 
+	public static CalculateLateFeeUseCase createCalculateLateFeeUseCase() {
+		CalculateLateFeeUseCase useCase = new CalculateLateFeeController();
+		return useCase;
+	}
 }

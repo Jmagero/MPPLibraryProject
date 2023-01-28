@@ -155,6 +155,7 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 		
 		btnCheckOutBook.addActionListener(new CheckOutBookListener());
 		btnPrintCheckOutRecord.addActionListener(new PrintCheckOutRecordListener());
+		btnCalculateLateFee.addActionListener(new CalculateLateFeeListener());
 		
 		LibrarianPanel.add(btnCheckOutBook);
 		LibrarianPanel.add(btnPrintCheckOutRecord);
@@ -310,6 +311,26 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 			}
 		}
 
+	}
+	
+	class CalculateLateFeeListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(!CalculateLateFeeWindow.UI.isInitialized()) {
+				
+				LibrarySystem.hideAllWindows();
+				CalculateLateFeeWindow.UI.init();
+				CalculateLateFeeWindow.UI.pack();
+				Util.centerFrameOnDesktop(CalculateLateFeeWindow.UI);
+				CalculateLateFeeWindow.UI.setVisible(true);
+			}
+			else {
+				
+				LibrarySystem.hideAllWindows();
+				CalculateLateFeeWindow.UI.setVisible(true);
+			}
+			
+		}
 	}
 
 	public static void hideAllWindows() {
