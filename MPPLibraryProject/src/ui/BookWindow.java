@@ -56,18 +56,24 @@ public class BookWindow extends JFrame implements SystemWindow{
 
 	@Override
 	public void init() {
-		mainPanel = new JPanel();
-		mainPanel.setLayout(new BorderLayout());
-		defineTopPanel();
-		defineOuterMiddle();
-		mainPanel.add(this.topPanel, BorderLayout.NORTH);
-		mainPanel.add(this.outerMiddle, BorderLayout.CENTER);
-
-		getContentPane().add(mainPanel);
-		isInitialized(true);
-		m_authors = getAllAuthors();
+		if(isInitialized) {
+			jScrollPane = initializeTable();
+		}else {
+			
+			mainPanel = new JPanel();
+			mainPanel.setLayout(new BorderLayout());
+			defineTopPanel();
+			defineOuterMiddle();
+			mainPanel.add(this.topPanel, BorderLayout.NORTH);
+			mainPanel.add(this.outerMiddle, BorderLayout.CENTER);
+			
+			getContentPane().add(mainPanel);
+			isInitialized(true);
+			m_authors = getAllAuthors();
+		}
 	}
 
+	
 	private JScrollPane initializeTable() {
 		//Clear rows and columns
 		jtmodel.setRowCount(0);
