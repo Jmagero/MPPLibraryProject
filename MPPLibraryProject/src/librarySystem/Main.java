@@ -13,7 +13,7 @@ import ui.LibrarySystem;
 public class Main {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
-			LibrarySystem.UI.setTitle("Sample Library Application");
+			LibrarySystem.UI.setTitle("Maharishi Library System");
 			LibrarySystem.UI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 			LibrarySystem.UI.init();

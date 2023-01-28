@@ -29,6 +29,7 @@ public class BookCopyWindow  extends JFrame implements SystemWindow  {
 	    private JTextField txtISBN, txtCopyNumber;
 
 	    public void initComponent() {
+	    	isInitialized(true);
 	        JPanel panelCreateCopyField = new JPanel();
 	        panelCreateCopyField.setLayout(null);
 	        JLabel lblISBN = new JLabel("ISBN:");
