@@ -7,6 +7,8 @@ import java.util.List;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import domain.Book;
+import domain.exception.NewBookException;
+import domain.exception.NewMemberException;
 import usecase.SearchBookUseCase;
 import usecase.BookUseCase;
 
@@ -22,10 +24,13 @@ public class BookController implements SearchBookUseCase,BookUseCase{
 	}
 
 	@Override
-	public void addBook(Book book) { 
+	
+	public void addBook(Book book) throws NewBookException {
 		if(searchBook(book.getISBN()) == null) {
 			DataAccess da = new DataAccessFacade();
 			da.saveNewBook(book);	
+		}else {
+			throw new NewBookException("Book already exits");
 		}
 	}
 

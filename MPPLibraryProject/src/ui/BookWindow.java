@@ -24,6 +24,7 @@ import controller.ControllerFactory;
 import domain.Author;
 import domain.Book;
 import domain.BookCopy;
+import domain.exception.NewBookException;
 import usecase.BookUseCase;
 import usecase.GetAuthorUseCase;
 import usecase.SearchBookUseCase;
@@ -285,10 +286,14 @@ public class BookWindow extends JFrame implements SystemWindow{
 				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Save Failed!", JOptionPane.ERROR_MESSAGE);
+				return;
 			}
 			JOptionPane.showMessageDialog(this,
-					"The book " + txtTitle.getText().trim() + " has been added " + "to the collection!");
+						"The book " + txtTitle.getText().trim() + " has been added " + "to the collection!");
 			clearData();
+			
+			
+			
 
 			// load books
 			List<domain.Book> dataa = searchBookUseCase.getBookCollection();
