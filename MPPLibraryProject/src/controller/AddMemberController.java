@@ -1,6 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
@@ -54,5 +56,17 @@ public class AddMemberController implements AddMemberUseCase, CheckMemberUseCase
 		HashMap<String,LibraryMember> map = da.readMemberMap();
 		return map.get(memberId);
 	}
+
+	@Override
+	
+	
+	public List<LibraryMember> getMemberList() {
+		DataAccess da = new DataAccessFacade();
+		HashMap<String,LibraryMember> map= da.readMemberMap();
+	
+		List<LibraryMember> members = new ArrayList<>(map.values());
+		return members;
+	}
+
 
 }
