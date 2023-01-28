@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,10 +14,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import controller.ControllerFactory;
 import domain.Address;
+import domain.Book;
+import domain.BookCopy;
 import domain.LibraryMember;
 import domain.exception.NewMemberException;
 import usecase.AddMemberUseCase;
@@ -34,6 +40,8 @@ public class AddMemberWindow extends JFrame implements SystemWindow {
 	private boolean isInitialized = false;
 	
 	private JPanel mainPanel = new JPanel();
+	private JPanel formPanel = new JPanel();
+	private JPanel tablePanel = new JPanel();
 	private JPanel topPanel = new JPanel();
 	private JPanel outerMiddel = new JPanel();
 	private JPanel lowerPanel;
@@ -56,6 +64,10 @@ public class AddMemberWindow extends JFrame implements SystemWindow {
 	private JLabel lblZipCode;
 	private JLabel lblState;
 	
+	private JScrollPane jScrollPane;
+	JTable jt;
+	DefaultTableModel jtmodel = new DefaultTableModel();
+	
 	private AddMemberWindow() {}
 	
 
@@ -63,18 +75,76 @@ public class AddMemberWindow extends JFrame implements SystemWindow {
 	public void init() {
 		initializeComponent();
 		mainPanel.setLayout(new BorderLayout());
+		this.setTitle("Late Book Return");
+		this.setMinimumSize(new Dimension(660, 300));
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		formPanel.setLayout(new BorderLayout());	
 		defineTopPanel();
 		defineOuterMiddle();
 		defineLowerPanel();
+		formPanel.add(topPanel, BorderLayout.NORTH);
+		formPanel.add(outerMiddel, BorderLayout.CENTER);
+		formPanel.add(lowerPanel, BorderLayout.SOUTH);
+		mainPanel.add(formPanel,BorderLayout.NORTH);
 		
-		mainPanel.add(topPanel, BorderLayout.NORTH);
-		mainPanel.add(outerMiddel, BorderLayout.CENTER);
-		mainPanel.add(lowerPanel, BorderLayout.SOUTH);
+		tablePanel.setLayout(new BorderLayout());	
+		jScrollPane = initializeTable();
+		jScrollPane.setMaximumSize(new Dimension(650, 200));
+        jScrollPane.setPreferredSize(new Dimension(0, 200));
+
+		
+
+		mainPanel.add(jScrollPane,BorderLayout.SOUTH);
+		
 		getContentPane().add(mainPanel);
 		isInitialized = true;
 		
 	}
 	
+	private JScrollPane initializeTable() {
+		//Clear rows and columns
+		jtmodel.setRowCount(0);
+		jtmodel.setColumnCount(0);
+		
+		// jTable
+		jtmodel.addColumn("Member ID");
+		jtmodel.addColumn("Name");
+		jtmodel.addColumn("Address");
+		jtmodel.addColumn("Phone Number");
+
+		jt = new JTable(jtmodel);
+
+		jt.getColumnModel().getColumn(0).setPreferredWidth(20);
+		jt.getColumnModel().getColumn(1).setPreferredWidth(27);
+		jt.getColumnModel().getColumn(3).setPreferredWidth(70);
+		jt.getColumnModel().getColumn(3).setPreferredWidth(22);
+		JScrollPane sp = new JScrollPane(jt);
+
+		// load books
+		List<LibraryMember> data;
+		try {
+			data = addLibraryMemberUseCase.getMemberList();
+			for (LibraryMember member : data) {
+				
+				
+				jtmodel.addRow(new Object[] { member.getMemberId(), member.getFullName(),
+						member.getAddress(), member.getTelephone() });
+				
+				
+			}
+		} catch (NewMemberException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		return sp;
+
+	}
+
+
+
 	private void initializeComponent() {
 		txtMemberId = new JTextField(20);
 		txtFirstName = new JTextField(20);
@@ -177,9 +247,9 @@ public class AddMemberWindow extends JFrame implements SystemWindow {
 	private void defineLowerPanel() {
 		
 		lowerPanel = new JPanel();
-		lowerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));;
+		lowerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));;
 		
-		JButton btnBackToMain = new JButton("<= Back to Main");
+		JButton btnBackToMain = new JButton("<< Back to Main");
 		btnBackToMain.addActionListener(new BackToMainListener());
 		btnBackToMain.setFocusPainted(false);
 		lowerPanel.add(btnBackToMain);
@@ -191,6 +261,7 @@ public class AddMemberWindow extends JFrame implements SystemWindow {
 					addLibraryMemberUseCase.addNewMember(createMemberObject());
 					clearForm();
 					JOptionPane.showMessageDialog(this, "New Member added successfully.");
+					initializeTable();
 				} catch (NewMemberException e) {
 					JOptionPane.showMessageDialog(this, e.getMessage());
 					e.printStackTrace();
