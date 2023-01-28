@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import controller.ControllerFactory;
 import domain.Author;
 import domain.Book;
+import domain.exception.BookNotFoundException;
 import usecase.BookCopyUseCase;
 
 
@@ -101,8 +102,11 @@ public class BookCopyWindow  extends JFrame implements SystemWindow  {
 
 	                txtISBN.setText("");
 	                txtCopyNumber.setText("");
-
-	                JOptionPane.showMessageDialog(this,"Book copy added successfully, Book " + book.getISBN() + " has " + book.getNumCopies() + " copies");
+	                if(book != null) {
+	                	JOptionPane.showMessageDialog(this,"Book copy added successfully, Book " + book.getISBN() + " has " + book.getNumCopies() + " copies");
+	                }else {
+	                	throw new BookNotFoundException("Entered wrong book ISBN");
+	                }
 
 	            } catch (Exception e) {
 	                JOptionPane.showMessageDialog(this,e.getMessage(),"Save Failed", JOptionPane.ERROR_MESSAGE);
