@@ -37,17 +37,19 @@ public class CheckoutBookWindow extends JFrame implements SystemWindow {
     JTextField txtISBN, txtMemberID;
     JComboBox<BookCopy> cmbCopies;
     JTable jt;
+    JPanel panelCheckoutFields;
+    JScrollPane sp;
+    DefaultTableModel model2;
 
     public void checkOutBook() {
 
-        JPanel panelCheckoutFields = new JPanel();
+        panelCheckoutFields = new JPanel();
         panelCheckoutFields.setLayout(null);
         panelCheckoutFields.setSize(500,500);
 
         this.setTitle("Checkout Book");
         this.setMinimumSize(new Dimension(850, 600));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setLayout(new BorderLayout());
 
         JLabel lblISBN = new JLabel("ISBN");
         lblISBN.setBounds(20, 20, 100, 20);
@@ -81,7 +83,7 @@ public class CheckoutBookWindow extends JFrame implements SystemWindow {
 
         jt = new JTable(model);
 
-        JScrollPane sp = new JScrollPane(jt);
+        sp = new JScrollPane(jt);
         sp.setBounds(20, 200, 800, 150);
         panelCheckoutFields.add(sp);
 
@@ -98,7 +100,7 @@ public class CheckoutBookWindow extends JFrame implements SystemWindow {
         this.setVisible(true);
         this.setResizable(true);
         this.add(panelCheckoutFields);
-
+        isInitialized = true;
     }
 
     private void addCheckoutListener(JButton butn) {
@@ -113,9 +115,12 @@ public class CheckoutBookWindow extends JFrame implements SystemWindow {
                     try {
                         checkOutBookUseCase.checkOutBook(memberID, bkISBN);
                         JOptionPane.showMessageDialog(this, "Checkout successful", "Thank you", JOptionPane.PLAIN_MESSAGE);
-                        displayCheckoutInfo();
+                        displayCheckoutInfo(); 
+                        txtISBN.setText("");
+                		txtMemberID.setText("");
                     } catch (BookNotFoundException | MemberNotFoundException | BookCopyNotAvailableException e) {
                         JOptionPane.showMessageDialog(this, e.getMessage(), "Check out book", JOptionPane.ERROR_MESSAGE);
+                        clearForm();
                     }
             }
         });
@@ -134,7 +139,7 @@ public class CheckoutBookWindow extends JFrame implements SystemWindow {
         if (cr == null)
             return;
 
-        DefaultTableModel model2 = (DefaultTableModel) jt.getModel();
+        model2 = (DefaultTableModel) jt.getModel();
         model2.setRowCount(0);
 
         for (CheckOutRecordEntry entry : cr.getCheckOutRecordEntries()) {
@@ -157,5 +162,12 @@ public class CheckoutBookWindow extends JFrame implements SystemWindow {
     public void init() {
         checkOutBook();
     }
+    
+	public void clearForm() {
+		txtISBN.setText("");
+		txtMemberID.setText("");	
+		model2 = (DefaultTableModel) jt.getModel();
+        model2.setRowCount(0);
+	}
 
 }
