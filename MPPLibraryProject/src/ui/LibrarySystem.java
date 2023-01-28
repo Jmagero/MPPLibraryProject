@@ -304,10 +304,12 @@ public class LibrarySystem extends JFrame implements SystemWindow{
 				BookWindow.UI.pack();
 				Util.centerFrameOnDesktop(BookWindow.UI);
 				BookWindow.UI.setVisible(true);
+			
 			}else {
 				
 				LibrarySystem.hideAllWindows();
 				BookWindow.UI.setVisible(true);
+				BookWindow.UI.init();
 			}
 		}
 
